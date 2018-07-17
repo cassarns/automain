@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="1" failures="0" name="com.nickcassar.automain.AppTest" time="1.755" errors="1" skipped="0">
+<testsuite tests="1" failures="0" name="com.nickcassar.automain.AppTest" time="0.765" errors="1" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_152\jre\bin"/>
@@ -65,7 +65,7 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.nickcassar.automain.AppTest" name="testApp" time="1.755">
+  <testcase classname="com.nickcassar.automain.AppTest" name="testApp" time="0.765">
     <error message="Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]" type="org.hibernate.service.spi.ServiceException">org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
 	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:275)
 	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:237)
@@ -82,9 +82,8 @@
 	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:689)
 	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:724)
 	at com.nickcassar.automain.AppTest.testApp(AppTest.java:38)
-Caused by: org.hibernate.exception.JDBCConnectionException: Error calling Driver#connect
-	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:115)
-	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:42)
+Caused by: org.hibernate.exception.GenericJDBCException: Error calling Driver#connect
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:47)
 	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:113)
 	at org.hibernate.engine.jdbc.connections.internal.BasicConnectionCreator.convertSqlException(BasicConnectionCreator.java:118)
 	at org.hibernate.engine.jdbc.connections.internal.DriverConnectionCreator.makeConnection(DriverConnectionCreator.java:41)
@@ -104,53 +103,44 @@ Caused by: org.hibernate.exception.JDBCConnectionException: Error calling Driver
 	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:94)
 	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263)
 	... 42 more
-Caused by: org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
-	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:238)
+Caused by: org.postgresql.util.PSQLException: FATAL: database &quot;nickcassar&quot; does not exist
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2440)
+	at org.postgresql.core.v3.QueryExecutorImpl.readStartupMessages(QueryExecutorImpl.java:2559)
+	at org.postgresql.core.v3.QueryExecutorImpl.&lt;init&gt;(QueryExecutorImpl.java:133)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:208)
 	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:49)
 	at org.postgresql.jdbc.PgConnection.&lt;init&gt;(PgConnection.java:195)
 	at org.postgresql.Driver.makeConnection(Driver.java:454)
 	at org.postgresql.Driver.connect(Driver.java:256)
 	at org.hibernate.engine.jdbc.connections.internal.DriverConnectionCreator.makeConnection(DriverConnectionCreator.java:38)
 	... 57 more
-Caused by: java.net.ConnectException: Connection refused: connect
-	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
-	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
-	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
-	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
-	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
-	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
-	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
-	at java.net.Socket.connect(Socket.java:589)
-	at org.postgresql.core.PGStream.&lt;init&gt;(PGStream.java:69)
-	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:152)
-	... 62 more
 </error>
-    <system-err>Jul 17, 2018 1:44:08 PM org.hibernate.Version logVersion
+    <system-err>Jul 17, 2018 3:27:34 PM org.hibernate.Version logVersion
 INFO: HHH000412: Hibernate Core {5.3.2.Final}
-Jul 17, 2018 1:44:08 PM org.hibernate.cfg.Environment &lt;clinit&gt;
+Jul 17, 2018 3:27:34 PM org.hibernate.cfg.Environment &lt;clinit&gt;
 INFO: HHH000206: hibernate.properties not found
-Jul 17, 2018 1:44:08 PM org.hibernate.annotations.common.reflection.java.JavaReflectionManager &lt;clinit&gt;
+Jul 17, 2018 3:27:34 PM org.hibernate.annotations.common.reflection.java.JavaReflectionManager &lt;clinit&gt;
 INFO: HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
-Jul 17, 2018 1:44:08 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+Jul 17, 2018 3:27:35 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
 WARN: HHH10001002: Using Hibernate built-in connection pool (not for production use!)
-Jul 17, 2018 1:44:08 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+Jul 17, 2018 3:27:35 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost/nickcassar]
-Jul 17, 2018 1:44:08 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
-INFO: HHH10001001: Connection properties: {user=user, password=****}
-Jul 17, 2018 1:44:08 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+Jul 17, 2018 3:27:35 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001001: Connection properties: {user=postgres, password=****}
+Jul 17, 2018 3:27:35 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001003: Autocommit mode: false
-Jul 17, 2018 1:44:08 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections &lt;init&gt;
+Jul 17, 2018 3:27:35 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections &lt;init&gt;
 INFO: HHH000115: Hibernate connection pool size: 20 (min=1)
-Jul 17, 2018 1:44:09 PM org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator initiateService
+Jul 17, 2018 3:27:35 PM org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator initiateService
 WARN: HHH000342: Could not obtain connection to query metadata : null
-Jul 17, 2018 1:44:09 PM org.hibernate.dialect.Dialect &lt;init&gt;
+Jul 17, 2018 3:27:35 PM org.hibernate.dialect.Dialect &lt;init&gt;
 INFO: HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-Jul 17, 2018 1:44:09 PM org.hibernate.engine.jdbc.env.internal.LobCreatorBuilderImpl makeLobCreatorBuilder
+Jul 17, 2018 3:27:35 PM org.hibernate.engine.jdbc.env.internal.LobCreatorBuilderImpl makeLobCreatorBuilder
 INFO: HHH000422: Disabling contextual LOB creation as connection was null
-Jul 17, 2018 1:44:09 PM org.hibernate.engine.jdbc.spi.SqlExceptionHelper logExceptions
-WARN: SQL Error: 0, SQLState: 08001
-Jul 17, 2018 1:44:09 PM org.hibernate.engine.jdbc.spi.SqlExceptionHelper logExceptions
-ERROR: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+Jul 17, 2018 3:27:35 PM org.hibernate.engine.jdbc.spi.SqlExceptionHelper logExceptions
+WARN: SQL Error: 0, SQLState: 3D000
+Jul 17, 2018 3:27:35 PM org.hibernate.engine.jdbc.spi.SqlExceptionHelper logExceptions
+ERROR: FATAL: database &quot;nickcassar&quot; does not exist
 </system-err>
   </testcase>
 </testsuite>
