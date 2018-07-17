@@ -7,6 +7,9 @@
 # Build targets
 /target
 
+# IDE files
+/.vscode
+
 # BlueJ files
 *.ctxt
 
