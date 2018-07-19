@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.nickcassar.mapping">
+    <class name="Car" table="Car">
+        <id name="id" column="carId" type="long">
+            <generator class="identity"/>                     
+        </id>
+        <property name="make" column="Make" type="string"/>
+        <property name="model" column="Model" type="string"/>
+        <property name="year" column="Year" type="integer"/>       
+        <property name="odometerReading" column="OReading" type="double"/>
+        <property name="type" column="Type" type="string"/>    
+    </class>
+</hibernate-mapping>

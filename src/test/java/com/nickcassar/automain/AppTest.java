@@ -4,6 +4,9 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import com.nickcassar.automain.enums.CarType;
+import com.nickcassar.automain.models.Car;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -39,8 +42,8 @@ public class AppTest extends TestCase {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
  
-		AppUser user = new AppUser("firstuser");
-		session.save(user);
+		Car car = new Car("Honda", "Accord", 2007, 0, CarType.COUPE);
+		session.save(car);
  
 		session.getTransaction().commit();
 		session.close();
