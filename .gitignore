@@ -5,10 +5,13 @@
 *.log
 
 # Build targets
-/target
+target/
 
 # IDE files
 /.vscode
+
+# OS X specific files
+.DS_Store
 
 # BlueJ files
 *.ctxt
