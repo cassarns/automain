@@ -1,6 +1,6 @@
 -- This is the initialization file to create all the necessary tables for automain
 
-CREATE TABLE Car (
+CREATE TABLE IF NOT EXISTS Car (
   car_id    SERIAL PRIMARY KEY NOT NULL,
   make      VARCHAR(20) NOT NULL,
   model     VARCHAR(20) NOT NULL,
@@ -9,6 +9,41 @@ CREATE TABLE Car (
   car_type  VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE Maintenance (
-  maintenanceId SERIAL PRIMARY KEY NOT NULL
+CREATE TABLE IF NOT EXISTS MaintenanceTask (
+  car_id          SERIAL NOT NULL,
+  maintenance_id  SERIAL PRIMARY KEY NOT NULL,
+  task_name       VARCHAR(200) NOT NULL,
+  cost            FLOAT NOT NULL,
+  task_time       FLOAT NOT NULL,
+  FOREIGN KEY (car_id)
+  REFERENCES  Car (car_id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE  
+);
+
+CREATE TABLE IF NOT EXISTS DieselCar (
+  car_id    SERIAL NOT NULL,
+  diesel_id SERIAL PRIMARY KEY NOT NULL,
+  FOREIGN KEY (car_id)
+  REFERENCES  Car (car_id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS GasCar (
+  car_id    SERIAL NOT NULL,
+  gas_id SERIAL PRIMARY KEY NOT NULL,
+  FOREIGN KEY (car_id)
+  REFERENCES  Car (car_id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS ElectricCar (
+  car_id    SERIAL NOT NULL,
+  electric_id SERIAL PRIMARY KEY NOT NULL,
+  FOREIGN KEY (car_id)
+  REFERENCES  Car (car_id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
 );

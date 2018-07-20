@@ -4,20 +4,22 @@
 package com.nickcassar.automain.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.nickcassar.automain.enums.CarType;
-
-import org.hibernate.annotations.Generated;
+import com.nickcassar.automain.interfaces.BasicMaintenance;
 
 @Entity
 @Table(name = "Car")
-public class Car implements Serializable {
+public class Car implements Serializable, BasicMaintenance {
 
   /*****************
    * Class Variables
@@ -42,6 +44,10 @@ public class Car implements Serializable {
   // The type of car
   private CarType type;
 
+  // The list of maintenance tasks performed on the vehicle
+  @Transient
+  List<MaintenanceTask> mTasks;
+
   /*******************
    * Constructors
    *******************/
@@ -56,7 +62,35 @@ public class Car implements Serializable {
     this.year = year;
     this.odometerReading = oReading;
     this.type = type;
+
+    //Initialize the mTasks to an empty ArrayList
+    this.mTasks = new ArrayList<MaintenanceTask>();
   }
+
+  /***************
+   * Class Methods
+   ***************/
+
+  public void rotateTires(double cost, double time) {
+    MaintenanceTask rotateTireTask = new MaintenanceTask("Tire Rotation", cost, time);
+    mTasks.add(rotateTireTask);
+  }
+
+  public void changeTires(double cost, double time) {
+    MaintenanceTask changeTireTask = new MaintenanceTask("Tire Change", cost, time);
+    mTasks.add(changeTireTask);
+  }
+
+  public void changeBrakes(double cost, double time) {
+    MaintenanceTask changeBrakeTask = new MaintenanceTask("Brake Change", cost, time);
+    mTasks.add(changeBrakeTask);
+  }
+  
+  public void repairBody(double cost, double time) {
+    MaintenanceTask repairBodyTask = new MaintenanceTask("Autobody Repair", cost, time);
+    mTasks.add(repairBodyTask);
+  }
+
   /*********************
    * Getters and Setters
    *********************/

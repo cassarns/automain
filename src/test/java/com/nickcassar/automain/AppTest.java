@@ -1,20 +1,21 @@
 package com.nickcassar.automain;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
 
 import com.nickcassar.automain.enums.CarType;
 import com.nickcassar.automain.models.Car;
+import com.nickcassar.automain.models.DieselCar;
+import com.nickcassar.automain.models.ElectricCar;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Unit test for simple App.
@@ -47,16 +48,18 @@ public class AppTest extends TestCase {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
  
-		Car car = new Car("Honda", "Accord", 2007, 0, CarType.COUPE);
+    //Car car = new Car("Honda", "Accord", 2007, 0, CarType.COUPE);
+    DieselCar car = new DieselCar("Honda", "Accord", 2007, 0, CarType.CONVERTIBLE);
+
 		session.save(car);
  
     session.getTransaction().commit();
     
     Query query = session.createQuery("from Car");
     
-    List<Car> list = query.getResultList();
+    List<DieselCar> list = query.getResultList();
 
-    for (Car c: list) {
+    for (DieselCar c: list) {
       System.out.println(c.getCarId());
     }
 
