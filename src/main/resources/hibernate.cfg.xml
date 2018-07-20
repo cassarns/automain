@@ -19,10 +19,10 @@
         <property name="show_sql">true</property>
  
         <!-- Drop and re-create all database on startup -->
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <!-- property name="hibernate.hbm2ddl.auto">create</property -->
  
         <!-- Annotated entity classes -->
-        <mapping resource="com.nickcassar.mapping.car.hbm.xml"/>
+        <mapping resource="com/nickcassar/mapping/Car.hbm.xml"/>
         
     </session-factory>
 </hibernate-configuration>

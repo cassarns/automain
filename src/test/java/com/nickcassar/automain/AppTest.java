@@ -4,6 +4,11 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Query;
+
 import com.nickcassar.automain.enums.CarType;
 import com.nickcassar.automain.models.Car;
 
@@ -45,7 +50,16 @@ public class AppTest extends TestCase {
 		Car car = new Car("Honda", "Accord", 2007, 0, CarType.COUPE);
 		session.save(car);
  
-		session.getTransaction().commit();
+    session.getTransaction().commit();
+    
+    Query query = session.createQuery("from Car");
+    
+    List<Car> list = query.getResultList();
+
+    for (Car c: list) {
+      System.out.println(c.getCarId());
+    }
+
 		session.close();
 	}
 }

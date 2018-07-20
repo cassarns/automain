@@ -3,15 +3,20 @@
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="com.nickcassar.mapping">
+<hibernate-mapping package="com.nickcassar.automain.models">
     <class name="Car" table="Car">
-        <id name="id" column="carId" type="long">
+        <id name="carId" column="car_id" type="long">
             <generator class="identity"/>                     
         </id>
-        <property name="make" column="Make" type="string"/>
-        <property name="model" column="Model" type="string"/>
-        <property name="year" column="Year" type="integer"/>       
-        <property name="odometerReading" column="OReading" type="double"/>
-        <property name="type" column="Type" type="string"/>    
+        <property name="make" column="make" type="string"/>
+        <property name="model" column="model" type="string"/>
+        <property name="year" column="year" type="integer"/>       
+        <property name="odometerReading" column="odometer_reading" type="double"/>
+        <property name="type" column="car_type">
+          <type name="org.hibernate.type.EnumType">
+            <param name="enumClass">com.nickcassar.automain.enums.CarType</param>
+            <param name="useNamed">true</param>
+          </type>
+        </property>
     </class>
 </hibernate-mapping>

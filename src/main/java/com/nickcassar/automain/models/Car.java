@@ -9,10 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.nickcassar.automain.enums.CarType;
 
+import org.hibernate.annotations.Generated;
+
 @Entity
+@Table(name = "Car")
 public class Car implements Serializable {
 
   /*****************
@@ -20,7 +24,7 @@ public class Car implements Serializable {
    *****************/
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long carId;
 
   // The car's make
