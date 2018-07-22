@@ -41,7 +41,7 @@ public class MaintenanceTask {
   }
 
   // Default constructor
-  public MaintenanceTask( String taskName, double taskCost, double taskTime) {
+  public MaintenanceTask(String taskName, double taskCost, double taskTime) {
     this.name = taskName;
     this.cost = taskCost;
     this.time = taskTime;
