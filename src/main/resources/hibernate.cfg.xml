@@ -19,8 +19,8 @@
         <property name="show_sql">true</property>
  
         <!-- Annotated entity classes -->
-        <mapping resource="com/nickcassar/automain/models/Car.hbm.xml"/>
-        <mapping resource="com/nickcassar/automain/models/MaintenanceTask.hbm.xml"/>
+        <mapping resource="com/nickcassar/mapping/Car.hbm.xml"/>
+        <mapping resource="com/nickcassar/mapping/MaintenanceTask.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

@@ -37,7 +37,14 @@ public class DatabaseOperations {
    */
    private static SessionFactory buildASessionFactory() {
     // Pass the configuration properties from the hibernate.cfg.xml file
-    Configuration config = new Configuration().configure();
+    try {
+      sessionFactory = new Configuration().configure().buildSessionFactory();
+    } catch (Throwable ex) { 
+      System.err.println("Failed to create sessionFactory object." + ex);
+      throw new ExceptionInInitializerError(ex); 
+    }
+    return sessionFactory;
+    // Configuration config = new Configuration().configure();
     // config.configure("hibernate.cfg.xml");
     // config.addClass(Car.class);
     // config.addClass(MaintenanceTask.class);
@@ -49,8 +56,8 @@ public class DatabaseOperations {
 
     // Create the Hibernate SessionFactory instance
     // sessionFactory = config.buildSessionFactory(serviceReg);
-    sessionFactory = config.buildSessionFactory();
-    return sessionFactory;
+    // sessionFactory = config.buildSessionFactory();
+    // return sessionFactory;
   }
 
   /**
