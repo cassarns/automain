@@ -114,6 +114,7 @@ public class AppTest extends TestCase {
       Query query = session.createQuery("from Car");
       
       List<Car> list = query.getResultList();
+      
 
       for (Car c: list) {
         System.out.println("Car ID: " + c.getCarId());
