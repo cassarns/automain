@@ -10,8 +10,9 @@ CREATE TABLE IF NOT EXISTS Car (
 );
 
 CREATE TABLE IF NOT EXISTS MaintenanceTask (
-  car_id          SERIAL NOT NULL,
+  car_id          BIGINT NOT NULL,
   maintenance_id  SERIAL PRIMARY KEY NOT NULL,
+  idx             INT DEFAULT NULL,
   task_name       VARCHAR(200) NOT NULL,
   cost            FLOAT NOT NULL,
   task_time       FLOAT NOT NULL,
@@ -22,27 +23,24 @@ CREATE TABLE IF NOT EXISTS MaintenanceTask (
 );
 
 CREATE TABLE IF NOT EXISTS DieselCar (
-  car_id    SERIAL NOT NULL,
-  diesel_id SERIAL PRIMARY KEY NOT NULL,
-  FOREIGN KEY (car_id)
+  diesel_id    SERIAL PRIMARY KEY NOT NULL,
+  FOREIGN KEY (diesel_id)
   REFERENCES  Car (car_id)
   ON DELETE CASCADE
   ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS GasCar (
-  car_id    SERIAL NOT NULL,
-  gas_id SERIAL PRIMARY KEY NOT NULL,
-  FOREIGN KEY (car_id)
+  gas_id    SERIAL NOT NULL,
+  FOREIGN KEY (gas_id)
   REFERENCES  Car (car_id)
   ON DELETE CASCADE
   ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS ElectricCar (
-  car_id    SERIAL NOT NULL,
-  electric_id SERIAL PRIMARY KEY NOT NULL,
-  FOREIGN KEY (car_id)
+  electric_id    SERIAL PRIMARY KEY NOT NULL,
+  FOREIGN KEY (electric_id)
   REFERENCES  Car (car_id)
   ON DELETE CASCADE
   ON UPDATE CASCADE

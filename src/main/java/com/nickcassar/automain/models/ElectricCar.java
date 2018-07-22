@@ -20,11 +20,6 @@ public class ElectricCar extends Car implements EMaintenance {
    * Class Variables
    *****************/
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  private Long electricId;
-
-
   /**************
    * Constructors
    **************/
@@ -46,7 +41,7 @@ public class ElectricCar extends Car implements EMaintenance {
 
 	public void replaceBatterySystem(double time, double cost) {
     MaintenanceTask replaceBSystemTask = new MaintenanceTask("Battery System Replacement", cost, time);
-    super.mTasks.add(replaceBSystemTask);
+    getmTasks().add(replaceBSystemTask);
 	}
 
 

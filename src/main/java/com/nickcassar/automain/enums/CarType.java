@@ -4,5 +4,5 @@
 package com.nickcassar.automain.enums;
 
 public enum CarType {
-  HATCHBACK, SEDAN, MPV, SUV, CROSSOVER, COUPE, CONVERTIBLE;
+  HATCHBACK, SEDAN, MPV, SUV, CROSSOVER, COUPE, CONVERTIBLE, TRUCK;
 }

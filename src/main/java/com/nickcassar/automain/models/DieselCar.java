@@ -20,10 +20,6 @@ public class DieselCar extends Car implements ICMaintenance {
    * Class Variables
    *****************/
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  private Long dieselId;
-
   /**************
    * Constructors
    **************/
@@ -38,25 +34,32 @@ public class DieselCar extends Car implements ICMaintenance {
     super(make, model, year, oReading, type);
   }
 
+  /***************
+   * Class Methods
+   ***************/
+
   public void changeOil(double cost, double time) {
     MaintenanceTask changeOilTask = new MaintenanceTask("Oil Change", cost, time);
-    super.mTasks.add(changeOilTask);
+    getmTasks().add(changeOilTask);
 	}
 
 	public void changePlugs(double cost, double time) {
     MaintenanceTask changeGlowPlugsTask = new MaintenanceTask("Change Glow Plugs", cost, time);
-    super.mTasks.add(changeGlowPlugsTask);
+    getmTasks().add(changeGlowPlugsTask);
 	}
 
 	public void changeTransmissionFluid(double cost, double time) {
     MaintenanceTask changeTFluidTask = new MaintenanceTask("Change Transmission Fluid", cost, time);
-    super.mTasks.add(changeTFluidTask);
+    getmTasks().add(changeTFluidTask);
 	}
 
 	public void changeBattery(double cost, double time) {
     MaintenanceTask changeBatteryTask = new MaintenanceTask("Change Battery", cost, time);
-    super.mTasks.add(changeBatteryTask);
+    getmTasks().add(changeBatteryTask);
   }
 
+  /*********************
+   * Getters and Setters
+   *********************/
 
 }

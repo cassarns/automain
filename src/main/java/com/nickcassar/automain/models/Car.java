@@ -7,18 +7,23 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.nickcassar.automain.enums.CarType;
 import com.nickcassar.automain.interfaces.BasicMaintenance;
 
 @Entity
 @Table(name = "Car")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Car implements Serializable, BasicMaintenance {
 
   /*****************
@@ -26,7 +31,7 @@ public class Car implements Serializable, BasicMaintenance {
    *****************/
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long carId;
 
   // The car's make
@@ -45,8 +50,8 @@ public class Car implements Serializable, BasicMaintenance {
   private CarType type;
 
   // The list of maintenance tasks performed on the vehicle
-  @Transient
-  List<MaintenanceTask> mTasks;
+  @OneToMany(mappedBy = "idx", cascade = CascadeType.ALL)
+  private List<MaintenanceTask> mTasks;
 
   /*******************
    * Constructors
@@ -141,5 +146,13 @@ public class Car implements Serializable, BasicMaintenance {
 
   public void setType(CarType type) {
     this.type = type;
+  }
+
+  public List<MaintenanceTask> getmTasks() {
+    return this.mTasks;
+  }
+
+  public void setmTasks(List<MaintenanceTask> mTasks) {
+    this.mTasks = mTasks;
   }
 }

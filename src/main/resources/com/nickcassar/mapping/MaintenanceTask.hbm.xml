@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.nickcassar.automain.models">
+    <class name="MaintenanceTask" table="MaintenanceTask">
+      <id name="maintenanceId" column="maintenance_id" type="long">
+         <generator class="identity"/>                     
+      </id>
+      <property name="name" column="task_name" type="string"/>
+      <property name="cost" column="cost" type="double"/>
+      <property name="time" column="task_time" type="double"/>    
+    </class>
+</hibernate-mapping>
