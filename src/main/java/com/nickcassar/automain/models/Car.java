@@ -7,30 +7,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import com.nickcassar.automain.enums.CarType;
 import com.nickcassar.automain.interfaces.BasicMaintenance;
 
-@Entity
-@Table(name = "Car")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Car implements Serializable, BasicMaintenance {
 
   /*****************
    * Class Variables
    *****************/
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long carId;
 
   // The car's make
@@ -49,7 +34,6 @@ public class Car implements Serializable, BasicMaintenance {
   private CarType type;
 
   // The list of maintenance tasks performed on the vehicle
-  @OneToMany(mappedBy = "idx", cascade = CascadeType.ALL)
   private List<MaintenanceTask> mTasks;
 
   /*******************
@@ -93,6 +77,15 @@ public class Car implements Serializable, BasicMaintenance {
   public void repairBody(double cost, double time) {
     MaintenanceTask repairBodyTask = new MaintenanceTask("Autobody Repair", cost, time);
     mTasks.add(repairBodyTask);
+  }
+
+  @Override
+  public String toString() {
+    return  "Make: " + this.make + "\n" +
+            "Model: " + this.model + "\n" +
+            "Year: " + this.year + "\n" +
+            "Odometer: " + this.odometerReading + "\n" +
+            "Type: " + this.type + "\n";
   }
 
   /*********************

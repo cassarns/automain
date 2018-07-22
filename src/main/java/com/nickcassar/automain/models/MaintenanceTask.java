@@ -4,14 +4,6 @@
 
 package com.nickcassar.automain.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "MaintenanceTask")
 public class MaintenanceTask {
   
   /*****************
@@ -19,8 +11,6 @@ public class MaintenanceTask {
    *****************/
 
   // The maintenance id
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long maintenanceId;
 
   // The name of the task
@@ -45,6 +35,17 @@ public class MaintenanceTask {
     this.name = taskName;
     this.cost = taskCost;
     this.time = taskTime;
+  }
+
+  /***************
+   * Class Methods
+   ***************/
+
+  @Override
+  public String toString() {
+    return  "Task: " + this.name + "\n" +
+            "Cost: " + this.cost + "\n" +
+            "Time Needed: " + this.time + "\n";
   }
 
   /*********************

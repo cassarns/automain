@@ -10,11 +10,15 @@ import java.util.List;
 
 import com.nickcassar.automain.enums.CarType;
 import com.nickcassar.automain.models.Car;
+import com.nickcassar.automain.models.DieselCar;
+import com.nickcassar.automain.models.ElectricCar;
+import com.nickcassar.automain.models.GasCar;
 import com.nickcassar.automain.models.MaintenanceTask;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
@@ -31,15 +35,21 @@ public class DatabaseOperations {
   /**
    * Method to build a session factory object
    */
-   private static SessionFactory buildSessionFactory() {
+   private static SessionFactory buildASessionFactory() {
     // Pass the configuration properties from the hibernate.cfg.xml file
-    Configuration config = new Configuration();
-    config.configure("hibernate.cfg.xml");
+    Configuration config = new Configuration().configure();
+    // config.configure("hibernate.cfg.xml");
+    // config.addClass(Car.class);
+    // config.addClass(MaintenanceTask.class);
+    // config.addClass(DieselCar.class);
+    // config.addClass(ElectricCar.class);
+    // config.addClass(GasCar.class);
 
-    ServiceRegistry serviceReg = new StandardServiceRegistryBuilder().applySettings(config.getProperties()).build();
+    //ServiceRegistry serviceReg = new StandardServiceRegistryBuilder().applySettings(config.getProperties()).build();
 
     // Create the Hibernate SessionFactory instance
-    sessionFactory = config.buildSessionFactory(serviceReg);
+    // sessionFactory = config.buildSessionFactory(serviceReg);
+    sessionFactory = config.buildSessionFactory();
     return sessionFactory;
   }
 
@@ -47,15 +57,17 @@ public class DatabaseOperations {
    * Method to create a Car record in the database
    */
   public static void createRecord(Car c) {
+    Transaction tx = null;
     try {
       // Get the session
-      session = buildSessionFactory().openSession();
+      session = buildASessionFactory().openSession();
       // Get the transaction
-      session.beginTransaction();
+      tx = session.getTransaction();
+      tx.begin();
       // Save the car object
       session.save(c);
       // Commit the transaction
-      session.getTransaction().commit();
+      tx.commit();
       // Log the event
       logger.info("\nSuccessfully created Car Record in the Database!\n");
     } catch (Exception e) {
@@ -81,7 +93,7 @@ public class DatabaseOperations {
     List<Car> cars = new ArrayList<Car>();        
     try {
       // Getting Session Object From SessionFactory
-      session = buildSessionFactory().openSession();
+      session = buildASessionFactory().openSession();
       // Getting Transaction Object From Session Object
       session.beginTransaction();
       cars = session.createQuery("FROM Car").list();
@@ -106,7 +118,7 @@ public class DatabaseOperations {
     List<MaintenanceTask> mTasks = new ArrayList<MaintenanceTask>();        
     try {
       // Getting Session Object From SessionFactory
-      session = buildSessionFactory().openSession();
+      session = buildASessionFactory().openSession();
       // Getting Transaction Object From Session Object
       session.beginTransaction();
       mTasks = session.createQuery("FROM MaintenanceTask").list();
@@ -130,7 +142,7 @@ public class DatabaseOperations {
   public static void updateCarRecord(Long carId, String make, String model, int year, double oReading, CarType type) {
     try {
       // Getting Session Object From SessionFactory
-      session = buildSessionFactory().openSession();
+      session = buildASessionFactory().openSession();
       // Getting Transaction Object From Session Object
       session.beginTransaction();
       Car c = (Car) session.get(Car.class, carId);
@@ -160,7 +172,7 @@ public class DatabaseOperations {
   public static void updateMTRecord(Long mtId, String taskName, double taskCost, double taskTime) {
     try {
       // Getting Session Object From SessionFactory
-      session = buildSessionFactory().openSession();
+      session = buildASessionFactory().openSession();
       // Getting Transaction Object From Session Object
       session.beginTransaction();
       MaintenanceTask mt = (MaintenanceTask) session.get(MaintenanceTask.class, mtId);
@@ -188,7 +200,7 @@ public class DatabaseOperations {
   public static void deleteCarRecord(Long carId) {
     try {
       // Getting Session Object From SessionFactory
-      session = buildSessionFactory().openSession();
+      session = buildASessionFactory().openSession();
       // Getting Transaction Object From Session Object
       session.beginTransaction();
       Car c = findCarRecordById(carId);
@@ -212,7 +224,7 @@ public class DatabaseOperations {
     Car c = null;
     try {
       // Getting Session Object From SessionFactory
-      session = buildSessionFactory().openSession();
+      session = buildASessionFactory().openSession();
       // Getting Transaction Object From Session Object
       session.beginTransaction();
       c = (Car) session.load(Car.class, carId);
@@ -234,7 +246,7 @@ public class DatabaseOperations {
     MaintenanceTask mt = null;
     try {
       // Getting Session Object From SessionFactory
-      session = buildSessionFactory().openSession();
+      session = buildASessionFactory().openSession();
       // Getting Transaction Object From Session Object
       session.beginTransaction();
       mt = (MaintenanceTask) session.load(MaintenanceTask.class, mtId);
@@ -258,11 +270,11 @@ public class DatabaseOperations {
   public static void deleteAllMTRecords() {
     try {
       // Getting Session Object From SessionFactory
-      session = buildSessionFactory().openSession();
+      session = buildASessionFactory().openSession();
       // Getting Transaction Object From Session Object
       session.beginTransaction();
       // Build a query to delete all maintenance tasks from the database
-      Query query = session.createQuery("DELETE FROM MaintenanceTask");
+      Query query = session.createQuery("DELETE FROM maintenancetask");
       query.executeUpdate();
       // Commit the transaction
       session.getTransaction().commit();
@@ -286,11 +298,11 @@ public class DatabaseOperations {
   public static void deleteAllCarRecords() {
     try {
       // Getting Session Object From SessionFactory
-      session = buildSessionFactory().openSession();
+      session = buildASessionFactory().openSession();
       // Getting Transaction Object From Session Object
       session.beginTransaction();
       // Build a query to delete all maintenance tasks from the database
-      Query query = session.createQuery("DELETE FROM Car");
+      Query query = session.createQuery("DELETE FROM car");
       query.executeUpdate();
       // Commit the transaction
       session.getTransaction().commit();

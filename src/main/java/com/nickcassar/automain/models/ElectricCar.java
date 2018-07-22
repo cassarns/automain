@@ -3,14 +3,9 @@
  */
 package com.nickcassar.automain.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import com.nickcassar.automain.enums.CarType;
 import com.nickcassar.automain.interfaces.EMaintenance;
 
-@Entity
-@Table(name = "ElectricCar")
 public class ElectricCar extends Car implements EMaintenance {
 
   /*****************

@@ -2,20 +2,13 @@ package com.nickcassar.automain;
 
 import java.util.List;
 
-import javax.persistence.Query;
-import org.hibernate.Transaction;
-
+import com.nickcassar.automain.controllers.DatabaseOperations;
 import com.nickcassar.automain.enums.CarType;
 import com.nickcassar.automain.models.Car;
 import com.nickcassar.automain.models.DieselCar;
 import com.nickcassar.automain.models.ElectricCar;
 import com.nickcassar.automain.models.GasCar;
 import com.nickcassar.automain.models.MaintenanceTask;
-
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -40,22 +33,12 @@ public class AppTest extends TestCase {
   public static Test suite() {
     return new TestSuite( AppTest.class );
   }
-  // The SessionFactory
-  private static SessionFactory factory;
   /**
    * Test for Hibernate and Database Persistence
    */
   public void testApp() {
 
-    try {
-      factory = new Configuration().configure().buildSessionFactory();
-    } catch (Throwable ex) { 
-      System.err.println("Failed to create sessionFactory object." + ex);
-      throw new ExceptionInInitializerError(ex); 
-    }
-
     // Create some new Car objects and Maintenance Tasks
-
     ElectricCar eCar = new ElectricCar("Tesla", "Model S", 2015, 2000, CarType.SEDAN);
     DieselCar dCar = new DieselCar("Honda", "Accord", 2007, 0, CarType.CONVERTIBLE);
     GasCar gCar = new GasCar("For", "Explorer", 1998, 288940, CarType.SUV);
@@ -73,67 +56,55 @@ public class AppTest extends TestCase {
 
     // Try and add the cars to the database
     assertTrue(addCar(dCar));
-    assertTrue(addCar(gCar));
-    assertTrue(addCar(eCar));
+    //assertTrue(addCar(gCar));
+    //assertTrue(addCar(eCar));
 
-    assertTrue(listCars());
+    //assertTrue(listCars());
+    //assertTrue(listMaintenance());
 
 	}
 
   // Method to attempt to add the car to the database
   // Returns true if successful
   public boolean addCar(Car c) {
-    Session session = factory.openSession();
-    Transaction tx = null;
     boolean success = true;
     try {
-      tx = session.getTransaction();
-      tx.begin();
-      session.save(c);
-      tx.commit();
-    } catch (HibernateException e) {
-      if (tx!=null) {
-        tx.rollback();
-      }
+      DatabaseOperations.createRecord(c);
+    } catch (Exception e) {
       e.printStackTrace(); 
       success = false;
-   } finally {
-      session.close();
    }
     return success;
   }
 
+
+
   // Method to list all the cars in the database
   public boolean listCars() {
-    Session session = factory.openSession();
-    Transaction tx = null;
     boolean success = true;
     try {
-      tx = session.getTransaction();
-      tx.begin();
-      Query query = session.createQuery("from Car");
-      
-      List<Car> list = query.getResultList();
-      
-
+      List<Car> list = DatabaseOperations.displayCarRecords();
       for (Car c: list) {
-        System.out.println("Car ID: " + c.getCarId());
-        System.out.println("Car Make: " + c.getMake());
-        if (!c.getmTasks().isEmpty()) {
-          for (MaintenanceTask task : c.getmTasks()) {
-            System.out.println(task.getName() + ": " + task.getCost());
-          }
-        }
+        System.out.println(c.toString());
       }
-      tx.commit();
-    } catch (HibernateException e) {
-      if (tx != null) {
-        tx.rollback();
-      }
+    } catch (Exception e) {
       e.printStackTrace();
       success = false;
-    } finally {
-      session.close();
+    }
+    return success;
+  }
+
+  // Method to list all the maintenance tasks in the database
+  public boolean listMaintenance() {
+    boolean success = true;
+    try {
+      List<MaintenanceTask> list = DatabaseOperations.displayMaintenaceRecords();
+      for (MaintenanceTask mt: list) {
+        System.out.println(mt.toString());
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      success = false;
     }
     return success;
   }
