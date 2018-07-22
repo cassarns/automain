@@ -29,7 +29,7 @@ public class Car implements Serializable, BasicMaintenance {
    * Class Variables
    *****************/
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long carId;
 
   // The car's make

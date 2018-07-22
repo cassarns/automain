@@ -20,7 +20,7 @@ public class MaintenanceTask {
 
   // The maintenance id
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long maintenanceId;
 
   // The name of the task
