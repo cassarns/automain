@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS Car (
 );
 
 CREATE TABLE IF NOT EXISTS MaintenanceTask (
-  car_id          BIGINT NOT NULL,
+  car_id          BIGINT,
   maintenance_id  SERIAL PRIMARY KEY NOT NULL,
   idx             INT DEFAULT NULL,
   task_name       VARCHAR(200) NOT NULL,
