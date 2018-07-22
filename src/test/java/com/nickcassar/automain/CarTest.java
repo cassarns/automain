@@ -1,18 +1,8 @@
 package com.nickcassar.automain;
 
-import java.util.List;
-
-import javax.persistence.Query;
-
 import com.nickcassar.automain.enums.CarType;
-import com.nickcassar.automain.models.Car;
 import com.nickcassar.automain.models.DieselCar;
 import com.nickcassar.automain.models.ElectricCar;
-import com.nickcassar.automain.models.MaintenanceTask;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
