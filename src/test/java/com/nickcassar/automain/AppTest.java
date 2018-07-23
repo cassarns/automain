@@ -39,7 +39,7 @@ public class AppTest extends TestCase {
    */
   public void testApp() {
 
-    // Empty the database if there are still tuples in it and assert it is empty
+    // Delete all car records in the database and ensure the tables have no tuples
     assertTrue(deleteAll().size() == 0);
 
     // Create some new Car objects and Maintenance Tasks
@@ -83,8 +83,6 @@ public class AppTest extends TestCase {
     deleteCar(dCar);
     assertTrue(listCars().size() == 2);
 
-    // Delete all car records in the database and ensure the table has no tuples
-    //assertTrue(deleteAll().size() == 0);
 
 	}
 
