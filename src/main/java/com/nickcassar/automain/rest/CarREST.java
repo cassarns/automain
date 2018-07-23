@@ -19,7 +19,7 @@ import com.nickcassar.automain.controllers.DatabaseOperations;
 import com.nickcassar.automain.models.Car;
 
 @javax.inject.Singleton
-@Path("Car")
+@Path("/car")
 public class CarREST {
 
 	@PUT
@@ -37,9 +37,9 @@ public class CarREST {
 	}
 
 	@GET
-	@Path("{carId}")
+	@Path("{/carId}")
 	@Produces({ "application/json" })
-	public Car find(@PathParam("id") Long carId) {
+	public Car find(@PathParam("carId") Long carId) {
 		return DatabaseOperations.findCarRecord(carId);
 	}
 
