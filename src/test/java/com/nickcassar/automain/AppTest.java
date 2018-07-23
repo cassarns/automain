@@ -39,21 +39,25 @@ public class AppTest extends TestCase {
    */
   public void testApp() {
 
+    // Empty the database if there are still tuples in it and assert it is empty
+    assertTrue(deleteAll().size() == 0);
+
     // Create some new Car objects and Maintenance Tasks
     ElectricCar eCar = new ElectricCar("Tesla", "Model S", 2015, 2000, CarType.SEDAN);
     DieselCar dCar = new DieselCar("Honda", "Accord", 2007, 0, CarType.CONVERTIBLE);
-    GasCar gCar = new GasCar("For", "Explorer", 1998, 288940, CarType.SUV);
+    GasCar gCar = new GasCar("Ford", "Explorer", 1998, 288940, CarType.SUV);
+    
 
     // Diesel car tasks
-    dCar.changeBattery(50, 2.5);
-    dCar.changeBrakes(200, 4);
+    dCar.changeBattery(2.5, 50);
+    dCar.changeBrakes(4, 200);
 
     // Gas car tasks
-    gCar.changeBattery(75, 1);
-    gCar.repairBody(2500, 15);
+    gCar.changeBattery(1, 75);
+    gCar.repairBody(25, 1500);
 
     // Electric car tasks
-    eCar.replaceBatterySystem(5000, 50);
+    eCar.replaceBatterySystem(50, 5000);
 
     // Try and add the cars to the database and at each stage ensure the tables are the right size
     assertTrue(addCar(dCar));
@@ -80,7 +84,7 @@ public class AppTest extends TestCase {
     assertTrue(listCars().size() == 2);
 
     // Delete all car records in the database and ensure the table has no tuples
-    assertTrue(deleteAll().size() == 0);
+    //assertTrue(deleteAll().size() == 0);
 
 	}
 
