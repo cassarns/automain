@@ -10,19 +10,13 @@ import java.util.List;
 
 import com.nickcassar.automain.enums.CarType;
 import com.nickcassar.automain.models.Car;
-import com.nickcassar.automain.models.DieselCar;
-import com.nickcassar.automain.models.ElectricCar;
-import com.nickcassar.automain.models.GasCar;
 import com.nickcassar.automain.models.MaintenanceTask;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-import org.hibernate.service.ServiceRegistry;
 
 
 public class DatabaseOperations {
@@ -44,37 +38,22 @@ public class DatabaseOperations {
       throw new ExceptionInInitializerError(ex); 
     }
     return sessionFactory;
-    // Configuration config = new Configuration().configure();
-    // config.configure("hibernate.cfg.xml");
-    // config.addClass(Car.class);
-    // config.addClass(MaintenanceTask.class);
-    // config.addClass(DieselCar.class);
-    // config.addClass(ElectricCar.class);
-    // config.addClass(GasCar.class);
-
-    //ServiceRegistry serviceReg = new StandardServiceRegistryBuilder().applySettings(config.getProperties()).build();
-
-    // Create the Hibernate SessionFactory instance
-    // sessionFactory = config.buildSessionFactory(serviceReg);
-    // sessionFactory = config.buildSessionFactory();
-    // return sessionFactory;
   }
 
   /**
    * Method to create a Car record in the database
    */
   public static void createRecord(Car c) {
-    Transaction tx = null;
     try {
       // Get the session
       session = buildASessionFactory().openSession();
       // Get the transaction
-      tx = session.getTransaction();
-      tx.begin();
+      session.beginTransaction();
+      
       // Save the car object
       session.save(c);
       // Commit the transaction
-      tx.commit();
+      session.getTransaction().commit();
       // Log the event
       logger.info("\nSuccessfully created Car Record in the Database!\n");
     } catch (Exception e) {
@@ -210,10 +189,10 @@ public class DatabaseOperations {
       session = buildASessionFactory().openSession();
       // Getting Transaction Object From Session Object
       session.beginTransaction();
-      Car c = findCarRecordById(carId);
+      Car c = session.get(Car.class, carId);
       session.delete(c);
-      session.getTransaction().commit();;
-      logger.info("\nCar record: " + carId + " updated!");
+      session.getTransaction().commit();
+      logger.info("\nCar record: " + carId + " deleted!");
     } catch (Exception e) {
       if(session.getTransaction() != null) {
         logger.info("\nError occurred. Transaction Is Being Rolled Back.\n");
@@ -227,14 +206,18 @@ public class DatabaseOperations {
     }
   }
 
-  public static Car findCarRecordById(Long carId) {
+    /**
+   * Method to find a car record from the database
+   */
+  public static Car findCarRecord(Long carId) {
     Car c = null;
     try {
       // Getting Session Object From SessionFactory
       session = buildASessionFactory().openSession();
       // Getting Transaction Object From Session Object
       session.beginTransaction();
-      c = (Car) session.load(Car.class, carId);
+      c = session.get(Car.class, carId);
+      logger.info("\nCar record: " + carId + " found!");
     } catch (Exception e) {
       if(session.getTransaction() != null) {
         logger.info("\nError occurred. Transaction Is Being Rolled Back.\n");
@@ -249,14 +232,18 @@ public class DatabaseOperations {
     return c;
   }
 
-  public static MaintenanceTask findMTRecordById(Long mtId) {
+  /**
+   * Method to find a maintenance task record from the database
+   */
+  public static MaintenanceTask findMTRecord(Long mtId) {
     MaintenanceTask mt = null;
     try {
       // Getting Session Object From SessionFactory
       session = buildASessionFactory().openSession();
       // Getting Transaction Object From Session Object
       session.beginTransaction();
-      mt = (MaintenanceTask) session.load(MaintenanceTask.class, mtId);
+      mt = session.get(MaintenanceTask.class, mtId);
+      logger.info("\nMaintenanceTask record: " + mtId + " found!");
     } catch (Exception e) {
       if(session.getTransaction() != null) {
         logger.info("\nError occurred. Transaction Is Being Rolled Back.\n");
@@ -272,6 +259,32 @@ public class DatabaseOperations {
   }
 
   /**
+   * Method to delete a maintenance task record from the database
+   */
+  public static void deleteMTRecord(Long mtId) {
+    try {
+      // Getting Session Object From SessionFactory
+      session = buildASessionFactory().openSession();
+      // Getting Transaction Object From Session Object
+      session.beginTransaction();
+      MaintenanceTask mt = session.get(MaintenanceTask.class, mtId);
+      session.delete(mt);
+      session.getTransaction().commit();
+      logger.info("\nMaintenance Task record: " + mtId + " deleted!");
+    } catch (Exception e) {
+      if(session.getTransaction() != null) {
+        logger.info("\nError occurred. Transaction Is Being Rolled Back.\n");
+        session.getTransaction().rollback();
+      }
+      e.printStackTrace();
+    } finally {
+      if (session != null) {
+        session.close();
+      }
+    }
+  }
+
+  /**
    * Method to delete all maintenance records from the database
    */
   public static void deleteAllMTRecords() {
@@ -281,7 +294,7 @@ public class DatabaseOperations {
       // Getting Transaction Object From Session Object
       session.beginTransaction();
       // Build a query to delete all maintenance tasks from the database
-      Query query = session.createQuery("DELETE FROM maintenancetask");
+      Query query = session.createQuery("DELETE FROM MaintenanceTask");
       query.executeUpdate();
       // Commit the transaction
       session.getTransaction().commit();
@@ -309,7 +322,7 @@ public class DatabaseOperations {
       // Getting Transaction Object From Session Object
       session.beginTransaction();
       // Build a query to delete all maintenance tasks from the database
-      Query query = session.createQuery("DELETE FROM car");
+      Query query = session.createQuery("DELETE FROM Car");
       query.executeUpdate();
       // Commit the transaction
       session.getTransaction().commit();
