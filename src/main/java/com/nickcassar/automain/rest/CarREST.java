@@ -18,8 +18,7 @@ import javax.ws.rs.core.Response;
 import com.nickcassar.automain.controllers.DatabaseOperations;
 import com.nickcassar.automain.models.Car;
 
-@javax.inject.Singleton
-@Path("/car")
+@Path("Car")
 public class CarREST {
 
 	@PUT
@@ -37,14 +36,21 @@ public class CarREST {
 	}
 
 	@GET
-	@Path("{/carId}")
+	@Path("{carId}")
 	@Produces({ "application/json" })
 	public Car find(@PathParam("carId") Long carId) {
 		return DatabaseOperations.findCarRecord(carId);
 	}
 
-	@GET
-	@Produces({ "application/json" })
+  @GET
+  @Path("test")
+  @Produces("text/plain")
+  public String displayTest() {
+    return "TEST";
+  }
+
+  @GET
+  @Produces( { "application/json" })
 	public List<Car> findAll() {
 		return DatabaseOperations.displayCarRecords();
 	}

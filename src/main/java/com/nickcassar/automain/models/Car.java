@@ -17,9 +17,12 @@ import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.nickcassar.automain.enums.CarType;
 import com.nickcassar.automain.interfaces.BasicMaintenance;
 
+@XmlRootElement
 @Entity
 @Table(name = "Car")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
