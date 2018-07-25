@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,6 +20,7 @@ import javax.persistence.Table;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nickcassar.automain.enums.CarType;
 import com.nickcassar.automain.interfaces.BasicMaintenance;
 
@@ -51,6 +53,7 @@ public class Car implements Serializable, BasicMaintenance {
   private CarType type;
 
   // The list of maintenance tasks performed on the vehicle
+  @JsonIgnore
   @OneToMany(mappedBy = "idx", cascade = CascadeType.ALL)
   private List<MaintenanceTask> mTasks;
 

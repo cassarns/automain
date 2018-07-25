@@ -11,8 +11,6 @@
         <property name="hibernate.connection.url">jdbc:postgresql://localhost/automain_db</property>
         <property name="hibernate.connection.username">automain</property>
         <property name="hibernate.connection.password">pass12345</property>
-
-        <property name="hibernate.connection.datasource">java:/comp/env/jdbc/postgres</property>
  
         <!-- SQL dialect -->
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>

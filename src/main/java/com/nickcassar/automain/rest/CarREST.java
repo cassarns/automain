@@ -50,6 +50,13 @@ public class CarREST {
   }
 
   @GET
+  @Path("count")
+  @Produces("text/plain")
+  public String displayCount() {
+    return String.valueOf(DatabaseOperations.displayCarRecords().size());
+  }
+
+  @GET
   @Produces( { "application/json" })
 	public List<Car> findAll() {
 		return DatabaseOperations.displayCarRecords();
