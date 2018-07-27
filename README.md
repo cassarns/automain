@@ -33,7 +33,7 @@ To package the WAR and deploy it, run the command 'mvn clean package' to build a
 Once built, this WAR can be placed within the Tomcat directory (where exactly is platform dependent).
 The Tomcat deployement server should be started before proceeding.
 Once placed in the directory, you can access it by going to the following URL:
-http://localhost:8080/jaxrs/Car
+http://localhost:8080/automain/jaxrs/Car
 
 To verify if it works, you should see a JSON representation of the cars currently in the PostgreSQL database.
 
