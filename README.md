@@ -1,4 +1,4 @@
-# automain
+# AutoMain
 Automobile Maintenance Library
 
 # Prerequisites
