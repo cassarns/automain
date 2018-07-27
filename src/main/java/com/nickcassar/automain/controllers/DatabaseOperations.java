@@ -41,7 +41,57 @@ public class DatabaseOperations {
   }
 
   /**
-   * Method to create a Car record in the database
+   * Method to create a new Car record in the database
+   */
+  public static void createRecord(String make, String model, int year, double oReading, String carType) {
+    try {
+      // Get the session
+      session = buildASessionFactory().openSession();
+      // Get the transaction
+      session.beginTransaction();
+      CarType type = null;
+      if (carType.contentEquals("HATCHBACK")) {
+        type = CarType.HATCHBACK;
+      } else if (carType.contentEquals("SEDAN")) {
+        type = CarType.SEDAN;
+      } else if (carType.contentEquals("MPV")) {
+        type = CarType.MPV;
+      } else if (carType.contentEquals("SUV")) {
+        type = CarType.SUV;
+      } else if (carType.contentEquals("CROSSOVER")) {
+        type = CarType.CROSSOVER;
+      } else if (carType.contentEquals("COUPE")) {
+        type = CarType.COUPE;
+      } else if (carType.contentEquals("CONVERTIBLE")) {
+        type = CarType.CONVERTIBLE;
+      } else if (carType.contentEquals("TRUCK")) {
+        type = CarType.TRUCK;
+      }
+      Car c = new Car(make, model, year, oReading, type);
+      // Save the car object
+      session.save(c);
+      // Commit the transaction
+      session.getTransaction().commit();
+      // Log the event
+      logger.info("\nSuccessfully created Car Record in the Database!\n");
+    } catch (Exception e) {
+      if (session.getTransaction() != null) {
+        // If an error occurs, rollback the transaction
+        logger.info("\n Error occurred. Transaction is being rolled back.\n");
+        session.getTransaction().rollback();
+        e.printStackTrace();
+      }
+    } finally {
+      if (session != null) {
+        // Close the session
+        session.close();
+      }
+    }
+  }
+
+  /**
+   * Method to create a Car record with existing data in the database
+   * Also adds any maintenance that might be associated with it
    */
   public static void createRecord(Car c) {
     try {
@@ -49,7 +99,6 @@ public class DatabaseOperations {
       session = buildASessionFactory().openSession();
       // Get the transaction
       session.beginTransaction();
-      
       // Save the car object
       session.save(c);
       // Commit the transaction

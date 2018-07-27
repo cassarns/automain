@@ -16,7 +16,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Unit test for simple App.
+ * Unit test for Database Functionality.
  */
 public class AppTest extends TestCase {
   /**
@@ -67,6 +67,8 @@ public class AppTest extends TestCase {
     assertTrue(addCar(eCar));
     assertTrue(listCars().size() == 3);
 
+    assertTrue(addNewCar("Chevrolet", "Silverado", 2004, 245000, "TRUCK"));
+
     // List the maintenance tasks in the database and ensure the table is the right size
     assertTrue(listMaintenance().size() == 5);
 
@@ -81,9 +83,7 @@ public class AppTest extends TestCase {
     assertTrue(changedCar.getMake().contentEquals("CHANGED"));
 
     deleteCar(dCar);
-    assertTrue(listCars().size() == 2);
-
-
+    assertTrue(listCars().size() == 3);
 	}
 
   // Method to attempt to add the car to the database
@@ -99,6 +99,18 @@ public class AppTest extends TestCase {
     return success;
   }
 
+  // Method to attempt to add a new car to the database
+  // Returns true if successful
+  public boolean addNewCar(String make, String model, int year, double oReading, String type) {
+    boolean success = true;
+    try {
+      DatabaseOperations.createRecord(make, model, year, oReading, type);
+    } catch (Exception e) {
+      e.printStackTrace(); 
+      success = false;
+   }
+    return success;
+  }
 
 
   // Method to list all the cars in the database

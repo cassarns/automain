@@ -26,6 +26,13 @@ public class CarREST {
 	public Response edit(Car c) {
     DatabaseOperations.updateCarRecord(c.getCarId(), c.getMake(), c.getModel(), c.getYear(), c.getOdometerReading(), c.getType());
 		return Response.ok().entity("Car edited successfully").build();
+  }
+  
+  @PUT
+	@Consumes({ "application/xml", "application/json" })
+	public Response create(String make, String model, int year, double oReading, String type) {
+    DatabaseOperations.createRecord(make, model, year, oReading, type);
+		return Response.ok().entity("Car edited successfully").build();
 	}
 
 	@DELETE
